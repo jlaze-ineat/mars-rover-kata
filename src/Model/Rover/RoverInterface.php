@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Model;
+namespace App\Model\Rover;
+
+use App\Model\Point\PointInterface;
 
 interface RoverInterface
 {
@@ -12,7 +14,5 @@ interface RoverInterface
 
     public function right(): void;
 
-    public function getPoint(): Point;
-
-    public function getDirection(): string;
+    public function getPoint(): PointInterface;
 }
