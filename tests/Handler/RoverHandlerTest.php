@@ -4,7 +4,7 @@ namespace App\Tests\Handler;
 
 use App\Handler\RoverHandlerEnglish;
 use App\Handler\RoverHandlerFrench;
-use App\Model\RoverInterface;
+use App\Model\Rover\RoverInterface;
 use App\Model\Point;
 use PHPUnit\Framework\TestCase;
 
@@ -16,7 +16,7 @@ class RoverHandlerTest extends TestCase
     public function setUp(): void
     {
         $this->mockRover = $this->prophesize(RoverInterface::class);
-        $this->mockPoint = $this->prophesize(Point::class);
+        $this->mockPoint = $this->prophesize(Point\PointInterface::class);
     }
 
     public function testEnglishInvalidInstruction(): void
@@ -48,29 +48,10 @@ class RoverHandlerTest extends TestCase
         $handler = new $handlerClassName($this->mockRover->reveal());
         $handler->sendInstructions($instructions);
 
-        if ($nbCallForward > 0) {
-            $this->mockRover->forward()->shouldBeCalled($nbCallForward);
-        } else {
-            $this->mockRover->forward()->shouldNotBeCalled();
-        }
-
-        if ($nbCallBackward > 0) {
-            $this->mockRover->backward()->shouldBeCalled($nbCallBackward);
-        } else {
-            $this->mockRover->backward()->shouldNotBeCalled();
-        }
-
-        if ($nbCallLeft > 0) {
-            $this->mockRover->left()->shouldBeCalled($nbCallLeft);
-        } else {
-            $this->mockRover->left()->shouldNotBeCalled();
-        }
-
-        if ($nbCallRight > 0) {
-            $this->mockRover->right()->shouldBeCalled($nbCallRight);
-        } else {
-            $this->mockRover->right()->shouldNotBeCalled();
-        }
+        $this->mockRover->forward()->shouldBeCalledTimes($nbCallForward);
+        $this->mockRover->backward()->shouldBeCalledTimes($nbCallBackward);
+        $this->mockRover->left()->shouldBeCalledTimes($nbCallLeft);
+        $this->mockRover->right()->shouldBeCalledTimes($nbCallRight);
     }
 
     public function provideSendInstructionsData(): array

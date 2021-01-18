@@ -8,8 +8,8 @@ $handlers = [
 ];
 
 $rovers = [
-    's' => \App\Model\RoverSlow::class,
-    'f' => \App\Model\RoverFast::class,
+    's' => \App\Model\Rover\RoverSlow::class,
+    'f' => \App\Model\Rover\RoverFast::class,
 ];
 
 $lang = null;
@@ -38,7 +38,7 @@ while (!\in_array($direction, ['N', 'E', 'S', 'W'])) {
     $direction = readline('Direction (N/S/E/W)? ');
 }
 
-$handler = new $handlers[$lang](new $rovers[$type](new \App\Model\Point($x, $y), $direction));
+$handler = new $handlers[$lang](new $rovers[$type](\App\Factory\PointFactory::create($x, $y, $direction)));
 $start = (string) $handler;
 $finished = false;
 

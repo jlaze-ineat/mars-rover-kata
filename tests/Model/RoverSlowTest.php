@@ -2,8 +2,8 @@
 
 namespace App\Tests\Rover;
 
-use App\Model\Point;
-use App\Model\RoverSlow;
+use App\Factory\PointFactory;
+use App\Model\Rover\RoverSlow;
 use PHPUnit\Framework\TestCase;
 
 class RoverSlowTest extends TestCase
@@ -11,7 +11,7 @@ class RoverSlowTest extends TestCase
     public function testInvalidDirection(): void
     {
         $this->expectExceptionMessage( 'Invalid direction: invalid, allowed are: N, W, S, E');
-        new RoverSlow(new Point(0, 0), 'invalid');
+        new RoverSlow(PointFactory::create(0, 0, 'invalid'));
     }
 
     /**
@@ -27,11 +27,10 @@ class RoverSlowTest extends TestCase
         string $expectedDirection
     ): void
     {
-        $expectedPoint = new Point($expectedX, $expectedY);
-        $rover = new RoverSlow(new Point($startX, $startY), $startDirection);
+        $expectedPoint = PointFactory::create($expectedX, $expectedY, $expectedDirection);
+        $rover = new RoverSlow(PointFactory::create($startX, $startY, $startDirection));
         $rover->$method();
         $this->assertEquals($rover->getPoint(), $expectedPoint);
-        $this->assertEquals($rover->getDirection(), $expectedDirection);
     }
 
     public function provideTestMovementData(): array

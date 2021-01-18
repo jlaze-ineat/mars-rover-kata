@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Model\Rover;
 
 class RoverFast extends Rover
 {

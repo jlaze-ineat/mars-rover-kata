@@ -2,7 +2,7 @@
 
 namespace App\Handler;
 
-use App\Model\RoverInterface;
+use App\Model\Rover\RoverInterface;
 
 abstract class RoverHandler
 {
@@ -43,7 +43,7 @@ abstract class RoverHandler
         return <<<EOF
 Position-x: {$this->rover->getPoint()->getX()}
 Position-y: {$this->rover->getPoint()->getY()}
-Direction: {$this->rover->getDirection()}
+Direction: {$this->rover->getPoint()->getDirection()}
 
 EOF;
     }
